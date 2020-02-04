@@ -39,7 +39,6 @@ router.get('/email/:email', (req, res) => {
 router.post('/cpf', (req, res) => {
   userController.findByCpf(req.body).then(resp => {
     res.status(201).json(resp);
-    console.log(resp)
   })
   
 });

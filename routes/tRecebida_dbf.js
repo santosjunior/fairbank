@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-const userController = require('../controller/user_dbfController');
+const tRecebida = require('../controller/tRecebida_dbfController');
 
 router.post('/add', (req, res) => {
-    userController.create(req.body.naturalKey).then(resp => {
+    tRecebida.create(req.body.media).then(resp => {
         res.status(201).json(resp);
     })
 });

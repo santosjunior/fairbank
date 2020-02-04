@@ -9,9 +9,9 @@ const atributos = {
     }
 }
 
-const a = Object.assign(userBase, atributos)
+const a = Object.assign(userBase, atributos);
 
-const userPoupanca = db.sequelize.define('usuarios', a)
+const userPoupanca = db.sequelize.define('usuarios', a);
 
 //userPoupanca.sync();
 

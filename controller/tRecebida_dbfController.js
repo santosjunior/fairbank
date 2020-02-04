@@ -1,8 +1,8 @@
-const user = require('../models_dbf/user');
+const tRecebidas = require('../models_dbf/tRecebidas');
 
-const create = (naturalKey) => {
-    return user.create({
-        naturalKey: naturalKey      
+const create = (media) => {
+    return tRecebidas.create({
+        media: media               
     }).then(response => {
         return response;
     }).catch((erro) => {

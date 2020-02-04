@@ -9,12 +9,7 @@ const user = db.sequelize.define('usuarios', {
     naturalKey: {
         type: db.Sequelize.INTEGER,
         unique: true,
-    },    
-    tipo: {
-        type: db.Sequelize.STRING,
-        allowNull: false,
-    }
-    
+    } 
 })
 
 //user.sync({force: true});

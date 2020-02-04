@@ -10,7 +10,6 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const usersDbfRouter = require('./routes/user_dbf');
 const enderecoRouter = require('./routes/endereco');
-const enderecoDbfRouter = require('./routes/endereco_dbf');
 const relatorioDbfRouter = require('./routes/relatorio_dbf');
 
 var app = express();
@@ -33,7 +32,6 @@ app.use('/endereco', enderecoRouter);
 
 //rotas de banco de dados de fatos
 app.use('/dbf/user', usersDbfRouter);
-app.use('/dbf/endereco', enderecoDbfRouter);
 app.use('/dbf/relatorio', relatorioDbfRouter);
 
 

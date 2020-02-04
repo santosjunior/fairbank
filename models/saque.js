@@ -8,8 +8,7 @@ const saque = db.sequelize.define('saques', {
         autoIncrement: true
     },
     valor: {
-        type: db.Sequelize.DOUBLE,
-        defaultValue: 0.0
+        type: db.Sequelize.DOUBLE        
     },
 
 })

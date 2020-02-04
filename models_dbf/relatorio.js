@@ -1,6 +1,11 @@
 const db = require('../dbf_connection');
-const user = require('./user')
-const endereco = require('./endereco');
+const user = require('./user');
+const periodo = require('./periodo');
+const saques = require('./mediaSaques');
+const tRecebidas = require('./tRecebidas');
+const tRealizadas = require('./tRealizadas');
+
+
 
 const relatorio = db.sequelize.define('relatorios', {
     id: {
@@ -11,13 +16,20 @@ const relatorio = db.sequelize.define('relatorios', {
     debitos: {
         type: db.Sequelize.DOUBLE
     },
-    entradas: {
+    creditos: {
         type: db.Sequelize.DOUBLE
-    }
+    },
+    saldo: {
+        type: db.Sequelize.DOUBLE
+    },
+
 })
 
-user.hasMany(relatorio, { onDelete: 'cascade' });
-endereco.hasMany(relatorio, { onDelete: 'cascade' });
+user.hasOne(relatorio, { onDelete: 'cascade' });
+periodo.hasOne(relatorio, { onDelete: 'cascade' });
+saques.hasOne(relatorio, { onDelete: 'cascade' });
+tRecebidas.hasOne(relatorio, { onDelete: 'cascade' });
+tRealizadas.hasOne(relatorio, { onDelete: 'cascade' });
 
 //relatorio.sync({force: true});
 

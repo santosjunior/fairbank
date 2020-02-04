@@ -1,8 +1,8 @@
-const user = require('../models_dbf/user');
+const saques = require('../models_dbf/mediaSaques');
 
-const create = (naturalKey) => {
-    return user.create({
-        naturalKey: naturalKey      
+const create = (media) => {
+    return saques.create({
+        media: media               
     }).then(response => {
         return response;
     }).catch((erro) => {

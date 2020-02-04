@@ -88,8 +88,7 @@ const findByEmail = (email) => {
     })
 }
 
-const findByCpf = (dados) => {
-    console.log(dados)
+const findByCpf = (dados) => {    
     return user.findAll({
         where: {
             cpf: dados.cpf
@@ -152,14 +151,15 @@ const createDeposito = (dados) => {
                 return deposito.create({
                     valor: dados.valor,
                     usuarioId: usuarioId
-                }).then(response => {
+                    
+                }, { transaction: t });
+            }).then(response => {
                     return response
                 }).catch((erro) => {
                     return 'Erro: ' + erro
                 })
             })
         })
-    })
 }
 
 //Atualiza os dados quando há transferência
@@ -168,7 +168,7 @@ const updateSaldoTransferencia = (dados) => {
     let saldoDestino = 0;
     return remetente = findOne(dados.usuarioId).then(respRemetente => {
         saldoRemetente = respRemetente[0].saldo;
-        if (saldoRemetente > 0 && dados.valor < saldoRemetente) {
+        if (saldoRemetente > 0 && dados.valor <= saldoRemetente) {
             return destinatario = findOne(dados.destinatario).then(respDestino => {
                 saldoDestino = respDestino[0].saldo;
                 return db.sequelize.transaction(t => {

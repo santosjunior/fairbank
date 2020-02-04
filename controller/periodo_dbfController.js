@@ -1,8 +1,9 @@
-const user = require('../models_dbf/user');
+const periodo = require('../models_dbf/periodo');
 
-const create = (naturalKey) => {
-    return user.create({
-        naturalKey: naturalKey      
+const create = (mes, ano) => {
+    return periodo.create({
+        mes: mes,
+        ano: ano        
     }).then(response => {
         return response;
     }).catch((erro) => {
