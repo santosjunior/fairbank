@@ -1,0 +1,27 @@
+<div class="container">
+    <h4>Transferência entre contas Fair Bank</h4>
+    <br>
+    <form [formGroup]="destinoForm">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="CPF do destinatário" formControlName="cpf"
+                (blur)="obterDestino()">
+        </div>
+    </form>
+    <br>
+    <form [formGroup]="transferenciaForm" (ngSubmit)="transferir()">
+        <div class="form-group">
+            <label for="nome">Nome do Destinatário</label>
+            <input type="text" class="form-control" readonly placeholder="Nome do Destinatário"
+                value="{{destino.nome}}" id="nome">
+        </div>
+        <div class="form-group">
+            <label for="conta">Conta de Destino</label>
+            <input type="number" class="form-control" readonly placeholder="Conta de Destino"
+                value="{{destino.id}}" id="conta">
+        </div>
+        <div class="form-group">
+            <input type="number" class="form-control" placeholder="Valor" formControlName="valor">
+        </div>
+        <button type="submit" class="btn btn-primary">Transferir</button>
+    </form>
+</div>

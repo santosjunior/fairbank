@@ -1,0 +1,47 @@
+<br>
+<div class="row">
+    <div class="col-3">
+        <div class="container-fluid">
+            <h3>Dados Financeiros de {{ mes }}/{{ ano }}</h3>
+            <br>
+            <p>
+                Média de saques: R$ {{ dados.media_saques.toFixed(2)}}
+            </p>
+            <p>
+                Média de depósitos: R$ {{ dados.media_depositos.toFixed(2)}}
+            </p>
+            <p>
+                Média de Transferências Recebidas: R$ {{ dados.media_transferencias_recebidas.toFixed(2)}}
+            </p>
+            <p>
+                Média de Transferências Recebidas: R$ {{ dados.media_transferencias_realizadas.toFixed(2)}}
+            </p>
+            <br>
+            <p>
+                Créditos: R$ {{ dados.creditos.toFixed(2) }}
+            </p>
+            <p>
+                Débitos: R$ {{ dados.debitos.toFixed(2) }}
+            </p>
+            <p>
+                Saldo: R$ {{ dados.saldo.toFixed(2) }}
+            </p>
+            <br>
+            <p>
+                Valor comprometido: {{ comprometido }}%
+            </p>
+            <button type="button" class="btn btn-success" (click)="calcaularCredito()">Solicitar Crédito</button>
+            <br>
+            <br>
+            <p *ngIf="resposta != ''">
+                {{ resposta }}
+            </p>
+        </div>
+        
+    </div>
+    <div class="col-7">
+        <div class="container-fluid">
+            <canvas id="grafico">{{ grafico }}</canvas>
+        </div>
+    </div>
+</div>

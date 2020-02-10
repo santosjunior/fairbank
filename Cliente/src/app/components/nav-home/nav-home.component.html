@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <a class="navbar-brand" routerLink="/">Fair Bank</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/deposito', user.id]" routerLinkActive="active">Depósito</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/saque', user.id]">Saque</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/transferencia', user.id]">Transferencia</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/extrato', user.id]">Extrato</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/balanco', user.id]">Balanço Financeiro</a>
+            </li>
+        </ul>
+    </div>
+    <span class="navbar-text mr-5">Olá {{ user.nome }}</span>
+    <span class="navbar-text mr-5">Conta: {{ user.id }}</span>
+    <span class="navbar-text mr-5">Saldo: {{ user.saldo }}</span>
+    <button type="button" class="btn btn-danger" (click)="logout()">Sair</button>
+</nav>

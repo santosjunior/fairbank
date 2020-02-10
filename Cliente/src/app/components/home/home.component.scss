@@ -1,0 +1,12 @@
+.container-fluid {
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 94%;
+    width: auto;
+    height: auto; 
+    z-index: -1000;    
+    background-image: url('http://localhost:3000/images/dashboard.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;       
+}

@@ -1,0 +1,11 @@
+<br>
+<div class="container">
+    <h4>Realizar Depósito</h4>
+    <br>
+    <form [formGroup]="depositoForm" (ngSubmit)="depositar()">
+        <div class="form-group">
+            <input type="number" class="form-control" formControlName="valor" placeholder="Valor do Depósito">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!depositoForm.valid">Depositar</button>
+    </form>
+</div>

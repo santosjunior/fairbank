@@ -1,0 +1,61 @@
+<br>
+<div class="container">
+    <h4>Informe o Período</h4>
+    <br>
+    <form [formGroup]="extratoForm" (ngSubmit)="gerarExtrato()">
+        <div class="form-group row">
+            <div class="col-md">
+                <input type="date" class="form-control" placeholder="Data Inicial" formControlName="inicio">
+            </div>
+            <div class="col-md">
+                <input type="date" class="form-control" placeholder="Data Final" formControlName="fim">
+            </div>
+            <div class="col-md">
+                <button type="submit" class="btn btn-primary" [disabled]="!extratoForm.valid">Gerar Extrato</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+<br>
+<div class="container" *ngIf="extrato.user != null">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Operação</th>
+                <th scope="col">Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let operacao of operacoes" class="{{ operacao.color }}" >                
+                <td *ngIf="operacao.element.createdAt != null" class="operacao" >{{ operacao.element.createdAt | date: 'dd/MM/yyyy' }} </td>
+                <td *ngIf="operacao.operacao != null">{{ operacao.operacao }}</td>
+                <td *ngIf="operacao.element.valor != null">R$ {{ operacao.element.valor }}</td>
+            </tr>
+            <!--
+            <tr *ngFor="let saques of extrato.saque" class="table-danger">
+                <td>{{ saques.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>Saque</td>
+                <td>R$ {{ saques.valor }}</td>
+            </tr>
+            <tr *ngFor="let transf of extrato.transferencia" class="{{danger}}">
+                <td>{{ transf.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>Transferência Enviada</td>
+                <td>R$ {{ transf.valor }}</td>
+            </tr>
+            <tr *ngFor="let depositos of extrato.deposito" class="table-primary">
+                <td>{{ depositos.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td>Depósito</td>
+                <td>R$ {{ depositos.valor }}</td>
+            </tr>
+            <tr *ngFor="let tr of extrato.tfRecebida" class="table-primary">
+                <td *ngIf="tr">{{ tr.createdAt | date: 'dd/MM/yyyy' }}</td>
+                <td *ngIf="tr">Transferência Recebida</td>
+                <td *ngIf="tr">R$ {{ tr.valor }}</td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,10 @@
+<div class="container">
+    <h4>Realizar Saque</h4>
+    <br>
+    <form [formGroup]="saqueForm" (ngSubmit)="sacar()">
+        <div class="form-group">
+            <input type="number" formControlName="valor" class="form-control" placeholder="Valor a ser sacado">
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!saqueForm.valid">Sacar</button>
+    </form>
+</div>
