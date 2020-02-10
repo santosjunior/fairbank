@@ -13,6 +13,12 @@ const relatorio = db.sequelize.define('relatorios', {
         primaryKey: true,
         autoIncrement: true
     },
+    mes: {
+        type: db.Sequelize.INTEGER
+    },
+    ano: {
+        type: db.Sequelize.INTEGER
+    },
     debitos: {
         type: db.Sequelize.DOUBLE
     },
@@ -26,7 +32,6 @@ const relatorio = db.sequelize.define('relatorios', {
 })
 
 user.hasOne(relatorio, { onDelete: 'cascade' });
-periodo.hasOne(relatorio, { onDelete: 'cascade' });
 saques.hasOne(relatorio, { onDelete: 'cascade' });
 tRecebidas.hasOne(relatorio, { onDelete: 'cascade' });
 tRealizadas.hasOne(relatorio, { onDelete: 'cascade' });

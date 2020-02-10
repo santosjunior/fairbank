@@ -11,6 +11,11 @@ const usersRouter = require('./routes/users');
 const usersDbfRouter = require('./routes/user_dbf');
 const enderecoRouter = require('./routes/endereco');
 const relatorioDbfRouter = require('./routes/relatorio_dbf');
+const periodoRouter = require('./routes/periodo_dbf');
+const saquesRouter = require('.//routes/saque_dbf');
+const recebidasRouter = require('./routes/tRecebida_dbf');
+const realizadasRouter = require('./routes/tRealizada_dbf');
+const depositoRouter = require('./routes/deposito_dbf');
 
 var app = express();
 
@@ -33,8 +38,11 @@ app.use('/endereco', enderecoRouter);
 //rotas de banco de dados de fatos
 app.use('/dbf/user', usersDbfRouter);
 app.use('/dbf/relatorio', relatorioDbfRouter);
-
-
+app.use('/dbf/periodo', periodoRouter);
+app.use('/dbf/saques', saquesRouter);
+app.use('/dbf/recebidas', recebidasRouter);
+app.use('/dbf/realizadas', realizadasRouter);
+app.use('/dbf/depositos', depositoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

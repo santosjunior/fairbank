@@ -28,8 +28,8 @@ const testePoupanca = (dados) => {
         nome: dados.nome,
         cpf: dados.cpf,
         dn: dados.dn,
-        tipo: dados.tipo        
-    }).then(response => {       
+        tipo: dados.tipo
+    }).then(response => {
         return response;
     }).catch((erro) => {
         return 'Erro encontrado: ' + erro;
@@ -88,7 +88,7 @@ const findByEmail = (email) => {
     })
 }
 
-const findByCpf = (dados) => {    
+const findByCpf = (dados) => {
     return user.findAll({
         where: {
             cpf: dados.cpf
@@ -151,15 +151,15 @@ const createDeposito = (dados) => {
                 return deposito.create({
                     valor: dados.valor,
                     usuarioId: usuarioId
-                    
+
                 }, { transaction: t });
             }).then(response => {
-                    return response
-                }).catch((erro) => {
-                    return 'Erro: ' + erro
-                })
+                return response
+            }).catch((erro) => {
+                return 'Erro: ' + erro
             })
         })
+    })
 }
 
 //Atualiza os dados quando há transferência
@@ -203,7 +203,7 @@ const updateSaldoTransferencia = (dados) => {
     })
 }
 
-const listaSaques = (id) => {
+const listaSaques = (id, inicio, fim) => {
     return user.findAll({
         where: {
             id: id
@@ -211,70 +211,82 @@ const listaSaques = (id) => {
         include: [{
             model: saque,
             where: {
-                id: db.Sequelize.col('saques.usuarioId')
+                id: db.Sequelize.col('saques.usuarioId'),
+                createdAt: {
+                    [db.Sequelize.Op.gte]: new Date(inicio),
+                    [db.Sequelize.Op.lte]: new Date(fim),
+                }
+
             }
         }]
-    }).then(saques => {
-        return saques;
+    })
+}
+
+listaDepositos = (id, inicio, fim) => {
+    return deposito.findAll({
+        where: {
+            usuarioId: id,
+            createdAt: {
+                [db.Sequelize.Op.gte]: new Date(inicio),
+                [db.Sequelize.Op.lte]: new Date(fim),
+            }
+        }
+    }).then(depositos => {
+        return depositos
     }).catch((erro) => {
         return 'Erro encontrado: ' + erro;
+    })
+}
+
+const transferenciasRealizadas = (id, inicio, fim) => {
+    return user.findAll({
+        where: {
+            id: id
+        },
+        include: [{
+            model: transferencia,
+            where: {
+                id: db.Sequelize.col('transferencias.usuarioId'),
+                createdAt: {
+                    [db.Sequelize.Op.gte]: new Date(inicio),
+                    [db.Sequelize.Op.lte]: new Date(fim),
+                }
+
+            }
+        }]
+    })
+}
+
+const transferenciasRecebidas = (id, inicio, fim) => {
+    return transferencia.findAll({
+        where: {
+            destinatario: id,
+            createdAt: {
+                [db.Sequelize.Op.gte]: new Date(inicio),
+                [db.Sequelize.Op.lte]: new Date(fim),
+            }
+        }
     })
 }
 
 const doExtrato = (id, inicio, fim) => {
     return findOne(id).then(u => {
         extrato.user = u;
-        return user.findAll({
-            where: {
-                id: id
-            },
-            include: [{
-                model: transferencia,
-                where: {
-                    id: db.Sequelize.col('transferencias.usuarioId'),
-                    createdAt: {
-                        [db.Sequelize.Op.gte]: new Date(inicio),
-                        [db.Sequelize.Op.lte]: new Date(fim),
-                    }
-
-                }
-            }]
-        }).then(response => {
+        return transferenciasRealizadas(id, inicio, fim).then(response => {
             if (response.length > 0) {
-                extrato.transferencia = response[0].dataValues.transferencias
-            }
-            return user.findAll({
-                where: {
-                    id: id
-                },
-                include: [{
-                    model: saque,
-                    where: {
-                        id: db.Sequelize.col('saques.usuarioId'),
-                        createdAt: {
-                            [db.Sequelize.Op.gte]: new Date(inicio),
-                            [db.Sequelize.Op.lte]: new Date(fim),
-                        }
-
-                    }
-                }]
-            }).then(saques => {                          
+                extrato.transferencia = response[0].dataValues.transferencias               
+                
+            }            
+            return listaSaques(id, inicio, fim).then(saques => {
                 if (saques.length > 0) {
                     extrato.saque = saques[0].dataValues.saques
                 }
-                return transferencia.findAll({
-                    where: {
-                        destinatario: id
-                    }
-                }).then(tr => {
+                
+                return transferenciasRecebidas(id, inicio, fim).then(tr => {
                     if (tr.length > 0) {
                         extrato.tfRecebida = tr
-                    }
-                    return deposito.findAll({
-                        where: {
-                            usuarioId: id
-                        }
-                    }).then(depositos => {
+                    }                    
+                    return listaDepositos(id, inicio, fim).then(depositos => {
                         if (depositos.length > 0) {
                             extrato.deposito = depositos
                         }
@@ -317,5 +329,8 @@ module.exports = {
     findAllExceptSelf: findAllExceptSelf,
     createDeposito: createDeposito,
     findByCpf: findByCpf,
-    testePoupanca: testePoupanca
+    testePoupanca: testePoupanca,
+    transferenciasRealizadas: transferenciasRealizadas,
+    transferenciasRecebidas: transferenciasRecebidas,
+    listaDepositos: listaDepositos
 }

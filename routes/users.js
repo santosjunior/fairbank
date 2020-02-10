@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
   
 });
 
+//Obter usuário por id
 router.get('/:id', (req, res, next) => {
   userController.findOne(req.params.id).then(resp => {
     res.send(resp[0]);
@@ -43,6 +44,7 @@ router.post('/cpf', (req, res) => {
   
 });
 
+//Cria usuário
 router.post('/add', (req, res) => {
   userController.create(req.body).then(resp => {
     res.status(201).json(resp)
@@ -63,8 +65,32 @@ router.put('/saque', (req, res) => {
 });
 
 //Lista todos os saques
-router.get('/saques/:id', (req, res, next) => {
-  userController.listaSaques(req.params.id).then(resp => {
+router.post('/saques/:id', (req, res, next) => {
+  userController.listaSaques(req.params.id, req.body.inicio, req.body.fim).then(resp => {
+    res.send(resp)
+  })
+  
+});
+
+//Lista todos os depositos
+router.post('/depositos/:id', (req, res, next) => {
+  userController.listaDepositos(req.params.id, req.body.inicio, req.body.fim).then(resp => {
+    res.send(resp)
+  })
+  
+});
+
+//Lista todos as transferencias recebidas
+router.post('/recebidas/:id', (req, res, next) => {
+  userController.transferenciasRecebidas(req.params.id, req.body.inicio, req.body.fim).then(resp => {
+    res.send(resp)
+  })
+  
+});
+
+//Lista todos as transferencias realizadas
+router.post('/realizadas/:id', (req, res, next) => {
+  userController.transferenciasRealizadas(req.params.id, req.body.inicio, req.body.fim).then(resp => {
     res.send(resp)
   })
   
